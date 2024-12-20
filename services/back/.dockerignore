@@ -1,0 +1,3 @@
+nestjs/node_modules
+*.log
+.git
