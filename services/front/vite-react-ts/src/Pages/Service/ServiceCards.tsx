@@ -5,8 +5,6 @@ import { Img } from 'react-image';
 import { lighten, darken } from '@mui/system';
 import { useWindowContext } from "../../Providers/Windows";
 
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
-
 export interface ServiceDTO {
   title: string;
   description: string;
@@ -81,6 +79,7 @@ const ServiceCards = () => {
   const [services, setServices] = useState<ServiceDTO[]>([]);
   const { screenSize } = useWindowContext();
   const theme = useTheme();
+  const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
 
   useEffect(() => {
     async function fetchServices() {

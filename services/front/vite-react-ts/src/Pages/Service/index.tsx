@@ -5,12 +5,12 @@ import { ServiceDTO } from "./ServiceCards";
 import { Img } from 'react-image';
 import { useWindowContext } from "../../Providers/Windows";
 
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
 
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServiceDTO[]>([]);
   const theme = useTheme();
   const { screenSize } = useWindowContext();
+  const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
 
   useEffect(() => {
     async function fetchServices() {
@@ -21,7 +21,7 @@ const Services: React.FC = () => {
         if (Array.isArray(servicesDTO)) {
           setServices(servicesDTO);
         } else {
-          console.warn("Response is not an array, setting services to an empty array");
+          console.warn(`Response is not an array, setting services to an empty array\nRequest URL: ${BACKEND_URL}/services - This happened while fetching services data.`);
           setServices([]);
         }
       } catch (error) {

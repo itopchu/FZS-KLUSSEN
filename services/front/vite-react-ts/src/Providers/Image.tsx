@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
 
 export interface Gallery {
     title: string;
@@ -25,17 +24,18 @@ const sortImages = (images: string[] | null): string[] | null => {
 
 const sortGalleries = (galleries: Gallery[] | null): Gallery[] | null => {
     return galleries
-        ? [...galleries].sort((a, b) => (b.images?.length || 0) - (a.images?.length || 0))
-        : null;
+    ? [...galleries].sort((a, b) => (b.images?.length || 0) - (a.images?.length || 0))
+    : null;
 };
 
 const sortCategories = (categories: Category[] | null): Category[] | null => {
     return categories
-        ? [...categories].sort((a, b) => (b.galleries?.length || 0) - (a.galleries?.length || 0))
-        : null;
+    ? [...categories].sort((a, b) => (b.galleries?.length || 0) - (a.galleries?.length || 0))
+    : null;
 };
 
 const fetchGallery = async (category: string, gallery: string): Promise<Gallery> => {
+    const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
     try {
         const response = await axios.get(`${BACKEND_URL}/categories/${category}/${gallery}`);
         const galleryData = response.data;
@@ -53,18 +53,19 @@ const fetchGallery = async (category: string, gallery: string): Promise<Gallery>
 };
 
 const fetchCategory = async (category: string): Promise<Category> => {
+    const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
     try {
         const galleryNames = await axios.get(`${BACKEND_URL}/categories/${category}`);
         const album: string[] = galleryNames.data;
-
+        
         if (album.length === 0) {
             return { title: category, galleries: [] };
         }
-
+        
         const galleries: Gallery[] = await Promise.all(
             album.map(galleryName => fetchGallery(category, galleryName))
         );
-
+        
         return {
             title: category,
             galleries: sortGalleries(galleries),
@@ -79,6 +80,7 @@ const fetchCategory = async (category: string): Promise<Category> => {
 };
 
 const fetchCategories = async (): Promise<Category[] | null> => {
+    const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
     try {
         const response = await axios.get(`${BACKEND_URL}/categories`);
         const categoryNames: string[] = response.data;

@@ -94,9 +94,8 @@ export const ImageSlider: React.FC<{
                   src={`${BACKEND_URL}/${image}`}
                   alt={`Slide ${index}`}
                   style={{
-                    maxHeight: "100%",
-                    maxWidth: "100%",
-                    objectFit: "contain",
+                    height: "100%",
+                    objectFit: "cover",
                   }}
                 />
               </LazyLoad>

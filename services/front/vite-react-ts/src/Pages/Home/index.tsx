@@ -71,13 +71,13 @@ const AboutUs: React.FC = () => {
 };
 
 const Home: React.FC = () => {
-  const SITE_LOGO: string = import.meta.env.VITE_SITE_LOGO as string;
+  const SITE_BANNER: string = import.meta.env.VITE_SITE_BANNER as string;
 
   return (
     <>
       <Img
         loading="lazy"
-        src={`${BACKEND_URL}/${SITE_LOGO}`}
+        src={`${BACKEND_URL}/${SITE_BANNER}`}
         alt="banner"
         width={"100%"}
         height={"auto"}

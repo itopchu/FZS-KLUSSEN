@@ -24,8 +24,10 @@ EXPOSE ${PORT_FRONTEND}
 WORKDIR /app
 
 COPY vite-react-ts/package*.json ./
-RUN npm install -g serve
-RUN npm install
+
+RUN npm ci
+
+RUN npm install -g serve typescript
 
 COPY vite-react-ts/ ./
 

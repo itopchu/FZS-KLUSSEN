@@ -18,15 +18,14 @@ import { Img } from "react-image";
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
-const siteShortName: string = import.meta.env.VITE_SITE_SHORT_NAME as string;
-const siteLogo: string = import.meta.env.VITE_SITE_LOGO as string;
-
 function Header() {
   const theme = useTheme();
   const { screenSize } = useWindowContext();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
+  const siteShortName: string = import.meta.env.VITE_SITE_SHORT_NAME as string;
+  const siteLogo: string = import.meta.env.VITE_SITE_LOGO as string;
 
   const handleLogoClick = () => {
     navigate('/');
@@ -90,15 +89,23 @@ function Header() {
             justifyContent="space-between"
             height="100%"
           >
-            <Button variant='text' disableFocusRipple disableRipple onClick={handleLogoClick} style={{ cursor: 'pointer' }} sx={{ height: "100%", alignContent: 'center' }}>
+            <button 
+              onClick={handleLogoClick} 
+              style={{
+                cursor: 'pointer',
+                height: '100%',
+                alignContent: 'center',
+                border: 'none',
+                background: 'none',
+                outline: 'none',
+              }}
+            >
               <Img src={`${BACKEND_URL}/${siteLogo}`} alt="Logo" style={{ height: '80%' }} />
-            </Button>
+            </button>
             <Box height={"120%"} alignContent={'center'}>
-              <Button
-                color="inherit"
-                component={Link}
-                to="/"
-                sx={{
+              <button
+                onClick={handleLogoClick}
+                style={{
                   fontFamily: '"Archivo Black", sans-serif',
                   fontWeight: 400,
                   textTransform: 'uppercase',
@@ -106,12 +113,15 @@ function Header() {
                   color: '#FF5E1A',
                   height: '80%',
                   padding: 0,
+                  background: 'none',
+                  border: 'none',
+                  outline: 'none',
+                  cursor: 'pointer',
                 }}
               >
                 {siteShortName}
-              </Button>
+              </button>
             </Box>
-
             {screenSize === 'mobile' ? (
               <IconButton
                 color="inherit"

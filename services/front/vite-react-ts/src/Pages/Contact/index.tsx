@@ -123,9 +123,8 @@ const Contact: React.FC = () => {
     }
   };
 
-  // Reset success message after 10 seconds
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     if (successMessage) {
       timer = setTimeout(() => setSuccessMessage(false), 10000);
     }

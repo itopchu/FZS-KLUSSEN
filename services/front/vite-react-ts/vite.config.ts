@@ -1,20 +1,13 @@
-import { defineConfig, loadEnv } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv } from 'vite'
+import react from '@vitejs/plugin-react'
 
-export default ({ mode }: { mode: string }) => {
-  // Load environment variables
-  const env = loadEnv(mode, process.cwd());
-
-  return defineConfig({
+export default defineConfig(({ mode }: { mode: string }) => {
+  const env = loadEnv(mode, process.cwd())
+  return {
     plugins: [react()],
+    base: "/",
     define: {
-      // Expose variables as `import.meta.env`
-      'import.meta.env': {
-        env,
-      },
-    },
-    build: {
-      outDir: 'dist',
+      __APP_ENV__: JSON.stringify(env.__APP_ENV__),
     },
     server: {
       watch: {
@@ -24,5 +17,8 @@ export default ({ mode }: { mode: string }) => {
       strictPort: true,
       host: '0.0.0.0',
     },
-  });
-};
+    future: {
+      v7_startTransition: true,
+    },
+  }
+})

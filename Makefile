@@ -19,7 +19,10 @@ fclean: clean
 	docker volume rm $$(docker volume ls -q -f "label=com.docker.compose.project=$(PROJECT_NAME)") 2>/dev/null || true
 	docker network rm $$(docker network ls -q -f "label=com.docker.compose.project=$(PROJECT_NAME)") 2>/dev/null || true
 
-check:
-	npx depcheck
+force-clean:
+	docker system prune -a --volumes
 
-.PHONY: all down clean fclean check dirs
+# check:
+# 	npx depcheck
+
+.PHONY: all down clean fclean force-clean
