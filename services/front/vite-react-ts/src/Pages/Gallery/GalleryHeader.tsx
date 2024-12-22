@@ -5,11 +5,7 @@ import {
   useTheme 
 } from '@mui/material';
 import { useWindowContext } from '../../Providers/Windows';
-
-interface GalleryHeaderProps {
-  title: string;
-  description: string;
-}
+import { fetchInfo, sectionDTO } from '../../App';
 
 export function getResponsiveValue(screenSize: string, values: Record<string, string>): string {
     switch(screenSize) {
@@ -20,14 +16,13 @@ export function getResponsiveValue(screenSize: string, values: Record<string, st
     }
 }
 
-export const GalleryHeader: React.FC<GalleryHeaderProps> = ({ 
-  title, 
-  description,
-}) => {
+export const GalleryHeader: React.FC = () => {
   const theme = useTheme();
   const { screenSize } = useWindowContext();
+  const header: sectionDTO | null = fetchInfo("gallery");
 
-  // Determine typography variant based on screen size
+   if (!header) return null;
+
   const getVariant = () => {
     switch(screenSize) {
       case 'mobile':
@@ -53,13 +48,13 @@ export const GalleryHeader: React.FC<GalleryHeaderProps> = ({
         fontWeight={700}
         color={theme.palette.primary.main}
       >
-        {title}
+        {header?.title}
       </Typography>
       <Typography
         variant="body1"
         fontWeight={500}
       >
-        {description}
+        {header?.description}
       </Typography>
     </Stack>
   );

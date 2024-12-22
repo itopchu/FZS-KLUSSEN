@@ -15,10 +15,7 @@ const Gallery: React.FC = () => {
 
   return (
     <div style={{ paddingBottom: "1em" }}>
-      <GalleryHeader
-        title="Gallery Overview"
-        description="Discover a carefully curated collection of projects showcasing various aspects of work across different categories."
-      />
+      <GalleryHeader/>
 
       {isLoading ? <Typography color="error">Loading...</Typography>
         : categories.map((category, index) => (

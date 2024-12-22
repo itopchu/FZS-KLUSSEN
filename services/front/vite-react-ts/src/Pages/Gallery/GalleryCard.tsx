@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { Img } from 'react-image';
 import { Gallery } from '../../Providers/Image';
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
+import { envVars } from '../../App';
 
 interface GalleryCardProps {
   gallery: Gallery;
@@ -27,7 +27,7 @@ export const GalleryCard: React.FC<GalleryCardProps> = ({
     >
       <Img
         loading="lazy"
-        src={gallery?.images ? `${BACKEND_URL}/${gallery.images[0]}` : ''}
+        src={gallery?.images ? `${envVars.URL_BACKEND}/${gallery.images[0]}` : ''}
         alt={gallery.title}
         style={{
           width: '100%',

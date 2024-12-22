@@ -3,10 +3,10 @@ import {
   Typography,
   useTheme,
   Divider,
-  Stack
+  Stack,
 } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y, FreeMode } from 'swiper/modules';
+import { A11y, FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -57,14 +57,21 @@ export const CategoryGallerySwiper: React.FC<CategoryGallerySwiperProps> = ({
         <Divider />
         {category.galleries && category.galleries.length > 0 ? (
           <Swiper
-            style={{
-              padding: "1em",
-              backgroundColor: theme.palette.background.paper,
-            }}
-            modules={[A11y, FreeMode]}
+            style={{ paddingBottom: '2em' }}
+            modules={[A11y, FreeMode, Pagination]}
             slidesPerView={screenSize === 'mobile' ? 2 : screenSize === 'wide' ? 4 : 6}
             spaceBetween={screenSize === 'mobile' ? 5 : screenSize === 'wide' ? 10 : 20}
-            pagination={{ clickable: true }}
+            pagination={{
+              clickable: true,
+              renderBullet: (_, className) => {
+                return `
+                  <span
+                    class="${className}"
+                    style="background-color: ${theme.palette.primary.light};"
+                  ></span>
+                `;
+              },
+            }}
             freeMode={true}
             autoHeight={true}
           >
@@ -81,7 +88,7 @@ export const CategoryGallerySwiper: React.FC<CategoryGallerySwiperProps> = ({
         )}
       </Stack>
       {isSliderOpen && (
-       <ImageSlider gallery={isSliderOpen} onClose={() => toggleSlider(null)} /> 
+        <ImageSlider gallery={isSliderOpen} onClose={() => toggleSlider(null)} />
       )}
     </>
   );

@@ -4,6 +4,7 @@ import axios from "axios";
 import { Img } from 'react-image';
 import { lighten, darken } from '@mui/system';
 import { useWindowContext } from "../../Providers/Windows";
+import { envVars } from "../../App";
 
 export interface ServiceDTO {
   title: string;
@@ -79,13 +80,12 @@ const ServiceCards = () => {
   const [services, setServices] = useState<ServiceDTO[]>([]);
   const { screenSize } = useWindowContext();
   const theme = useTheme();
-  const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
 
   useEffect(() => {
     async function fetchServices() {
       try {
         const response = await axios.get(
-          `${BACKEND_URL}/services`
+          `${envVars.URL_BACKEND}/services`
         );
         const servicesDTO: ServiceDTO[] = response.data;
         setServices([]);
@@ -115,7 +115,7 @@ const ServiceCards = () => {
             key={index}
             title={service.title}
             description={service.description}
-            image={`${BACKEND_URL}/${service.image}`}
+            image={`${envVars.URL_BACKEND}/${service.image}`}
             mode={screenSize}
           />
         ))}

@@ -17,15 +17,13 @@ import { useWindowContext } from "../../Providers/Windows";
 import { Img } from "react-image";
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import { envVars } from '../../App';
 
 function Header() {
   const theme = useTheme();
   const { screenSize } = useWindowContext();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
-  const siteShortName: string = import.meta.env.VITE_SITE_SHORT_NAME as string;
-  const siteLogo: string = import.meta.env.VITE_SITE_LOGO as string;
 
   const handleLogoClick = () => {
     navigate('/');
@@ -100,7 +98,7 @@ function Header() {
                 outline: 'none',
               }}
             >
-              <Img src={`${BACKEND_URL}/${siteLogo}`} alt="Logo" style={{ height: '80%' }} />
+              <Img src={`${envVars.URL_BACKEND}/${envVars.SITE_LOGO}`} alt="Logo" style={{ height: '80%' }} />
             </button>
             <Box height={"120%"} alignContent={'center'}>
               <button
@@ -119,7 +117,7 @@ function Header() {
                   cursor: 'pointer',
                 }}
               >
-                {siteShortName}
+                {envVars.SITE_SHORT_NAME}
               </button>
             </Box>
             {screenSize === 'mobile' ? (

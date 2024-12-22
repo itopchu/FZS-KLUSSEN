@@ -5,18 +5,20 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import 'swiper/css/zoom';
 import { Navigation, Thumbs, FreeMode, Zoom } from "swiper/modules";
 import { Img } from "react-image";
 import LazyLoad from "react-lazyload";
 import { Gallery } from "../../Providers/Image";
-
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
+import { useWindowContext } from "../../Providers/Windows";
+import { envVars } from "../../App";
 
 export const ImageSlider: React.FC<{
   gallery: Gallery;
   onClose: () => void;
 }> = ({ gallery, onClose }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const { screenSize } = useWindowContext();
 
   if (!gallery || !gallery.images) {
     onClose();
@@ -91,10 +93,11 @@ export const ImageSlider: React.FC<{
               <LazyLoad once>
                 <Img
                   loading="lazy"
-                  src={`${BACKEND_URL}/${image}`}
+                  src={`${envVars.URL_BACKEND}/${image}`}
                   alt={`Slide ${index}`}
                   style={{
                     height: "100%",
+                    width: "100%",
                     objectFit: "cover",
                   }}
                 />
@@ -117,7 +120,7 @@ export const ImageSlider: React.FC<{
       >
         <Swiper
           onSwiper={setThumbsSwiper}
-          slidesPerView={4}
+          slidesPerView={ screenSize === 'mobile' ? 4 : screenSize === 'wide' ? 6 : 8 }
           freeMode
           watchSlidesProgress
           spaceBetween={10}
@@ -132,16 +135,18 @@ export const ImageSlider: React.FC<{
                 justifyContent: "center",
                 alignItems: "center",
                 cursor: "pointer",
+                height: "100%",
               }}
             >
               <LazyLoad offset={50} once>
                 <Img
-                  src={`${BACKEND_URL}/${image}`}
+                  src={`${envVars.URL_BACKEND}/${image}`}
                   alt={`Thumbnail ${index}`}
                   style={{
                     maxHeight: "100%",
                     maxWidth: "100%",
-                    objectFit: "cover",
+                    width: "auto",
+                    objectFit: "contain",
                     borderRadius: "4px",
                   }}
                 />

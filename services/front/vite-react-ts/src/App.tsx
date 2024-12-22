@@ -1,9 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./Sections/Header";
 import Footer from "./Sections/Footer";
 import Main from "./Sections/Main";
 import "./reset.css";
+import axios from "axios";
+
+export const getEnvVariables = () => {
+  const envVars = Object.entries(import.meta.env)
+    .filter(([key]) => key.startsWith("VITE_"))
+    .reduce((acc, [key, value]) => {
+      const cleanKey = key.replace("VITE_", "");
+      acc[cleanKey] = value;
+      return acc;
+    }, {} as Record<string, string>);
+  return envVars;
+};
+
+export const envVars = getEnvVariables();
+
+export interface sectionDTO {
+  title: string;
+  description: string[];
+}
+
+export const fetchInfo = (type: string) => {
+  const [info, setInfo] = useState<sectionDTO | null>(null);
+
+  useEffect(() => {
+    async function fetchInfo() {
+      try {
+        const response = await axios.get(`${envVars.URL_BACKEND}/services/${type}`);
+        const infoDTO: sectionDTO = response.data;
+        setInfo(infoDTO);
+        console.log(infoDTO);
+      } catch (error) {
+        console.error("Error fetching about us info:", error);
+      }
+    }
+    fetchInfo();
+  }), [];
+
+  return info;
+};
+
 
 function App() {
   useEffect(() => {

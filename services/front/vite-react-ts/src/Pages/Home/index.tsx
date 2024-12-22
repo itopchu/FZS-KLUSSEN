@@ -3,12 +3,17 @@ import { Typography, Stack, useTheme } from "@mui/material";
 import ServiceCards from "../Service/ServiceCards";
 import { Img } from 'react-image';
 import { useWindowContext } from "../../Providers/Windows";
-
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
+import { fetchInfo, sectionDTO } from "../../App";
+import { envVars } from "../../App";
 
 const AboutUs: React.FC = () => {
   const theme = useTheme();
   const { screenSize } = useWindowContext();
+
+  const aboutInfo: sectionDTO | null = fetchInfo("about");
+
+  if (!aboutInfo) return null;
+
   return (
     <Stack
       paddingY={"2em"}
@@ -21,7 +26,7 @@ const AboutUs: React.FC = () => {
         variant="h2"
         color={theme.palette.primary.main}
       >
-        WE ARE FZS
+        {aboutInfo?.title}
       </Typography>
       <Stack
         sx={{
@@ -31,39 +36,11 @@ const AboutUs: React.FC = () => {
         }}
         spacing={3}
       >
-        <Typography>
-          <strong>WE BUILD.</strong> In close collaboration with a steady, well
-          known and qualified group of subcontractors, all specialists in their
-          own disciplines. Together we are capable of building from small to
-          large in the higher segment. But as team players we’re always open to
-          get in touch with new and/or your favorite professionals.
-        </Typography>
-        <Typography>
-          <strong>WE MANAGE</strong> with suburb personal care and attention. We
-          always strive for the highest quality, take care off all communication
-          and coordination so YOU can enjoy the RIDE. As spin docters we operate
-          at our best in the center of your project. And we like to have FUN
-          doing this.
-        </Typography>
-        <Typography>
-          <strong>WE DESIGN.</strong> By carefully listening and asking the
-          right questions. By putting our skills in place we serve your demand,
-          but we’re bold enough to present our own ideas. We like to be involved
-          from start till the finish of a project and create a strong cohesion
-          between design, function and your budget.
-        </Typography>
-        <Typography>
-          By combining a construction company with an architectural firm we can
-          deliver this full circle of services.
-        </Typography>
-        <Typography>
-          But we also build for other architects and interior-architects.
-          Without compromising any of their designs. It is always a great
-          challenge to build a good design. We speak the language and know how
-          to get things build with great precision and high quality details.
-          Besides that it challenges us not to get stuck in one style and it is
-          a great opportunity to keep learning.
-        </Typography>
+        {aboutInfo?.description.map((paragraph, index) => (
+          <Typography key={index}>
+            {paragraph}
+          </Typography>
+        ))}
       </Stack>
     </Stack>
 
@@ -71,13 +48,12 @@ const AboutUs: React.FC = () => {
 };
 
 const Home: React.FC = () => {
-  const SITE_BANNER: string = import.meta.env.VITE_SITE_BANNER as string;
 
   return (
     <>
       <Img
         loading="lazy"
-        src={`${BACKEND_URL}/${SITE_BANNER}`}
+        src={`${envVars.URL_BACKEND}/${envVars.SITE_BANNER}`}
         alt="banner"
         width={"100%"}
         height={"auto"}

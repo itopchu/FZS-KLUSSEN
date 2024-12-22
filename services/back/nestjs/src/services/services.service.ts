@@ -2,10 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { ServiceDTO } from './services.controller';
 import * as fs from 'fs';
 import * as path from 'path';
+import { sectionDTO } from './services.controller';
 
 @Injectable()
 export class ServicesService {
   private servicesDirectory = path.join('/app', 'public', 'serviceCards');
+  private infoDirectory = path.join("/app", "public", "info");
+
+  getInfo(file: string): sectionDTO {
+    file = file + ".txt";
+    const resolvedPath = path.resolve(path.join(this.infoDirectory, file));
+    if (resolvedPath !== path.join(this.infoDirectory, file)) {
+      throw new Error("Invalid file path");
+    }
+
+    const fileContent = fs.readFileSync(resolvedPath, "utf-8");
+    if (!fileContent.trim()) {
+      throw new Error(`The ${file} file is empty.`);
+    }
+    const paragraphs = fileContent.split("\n").filter((line) => line.trim() !== "");
+    const title = paragraphs.shift();
+    return {
+      title: title,
+      description: paragraphs,
+    };
+  }
 
   getServices(): ServiceDTO[] {
     const serviceFolders = fs

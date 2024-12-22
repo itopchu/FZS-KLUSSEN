@@ -4,24 +4,23 @@ import axios from "axios";
 import { ServiceDTO } from "./ServiceCards";
 import { Img } from 'react-image';
 import { useWindowContext } from "../../Providers/Windows";
-
+import { envVars } from "../../App";
 
 const Services: React.FC = () => {
   const [services, setServices] = useState<ServiceDTO[]>([]);
   const theme = useTheme();
   const { screenSize } = useWindowContext();
-  const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
 
   useEffect(() => {
     async function fetchServices() {
       try {
-        const response = await axios.get(`${BACKEND_URL}/services`);
+        const response = await axios.get(`${envVars.URL_BACKEND}/services`);
         const servicesDTO = response.data;
   
         if (Array.isArray(servicesDTO)) {
           setServices(servicesDTO);
         } else {
-          console.warn(`Response is not an array, setting services to an empty array\nRequest URL: ${BACKEND_URL}/services - This happened while fetching services data.`);
+          console.warn(`Response is not an array, setting services to an empty array\nRequest URL: ${envVars.URL_BACKEND}/services - This happened while fetching services data.`);
           setServices([]);
         }
       } catch (error) {
@@ -84,7 +83,7 @@ const Services: React.FC = () => {
             </Stack>
             <Img
               loading="lazy"
-              src={`${BACKEND_URL}/${service.image}`}
+              src={`${envVars.URL_BACKEND}/${service.image}`}
               alt={service.title}
               width={screenSize === 'mobile' ? "100%" : "auto"}
               style={{

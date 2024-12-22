@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-
+import { envVars } from '../App';
 
 export interface Gallery {
     title: string;
@@ -35,9 +35,8 @@ const sortCategories = (categories: Category[] | null): Category[] | null => {
 };
 
 const fetchGallery = async (category: string, gallery: string): Promise<Gallery> => {
-    const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
     try {
-        const response = await axios.get(`${BACKEND_URL}/categories/${category}/${gallery}`);
+        const response = await axios.get(`${envVars.URL_BACKEND}/categories/${category}/${gallery}`);
         const galleryData = response.data;
         return {
             title: galleryData.title,
@@ -53,9 +52,8 @@ const fetchGallery = async (category: string, gallery: string): Promise<Gallery>
 };
 
 const fetchCategory = async (category: string): Promise<Category> => {
-    const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
     try {
-        const galleryNames = await axios.get(`${BACKEND_URL}/categories/${category}`);
+        const galleryNames = await axios.get(`${envVars.URL_BACKEND}/categories/${category}`);
         const album: string[] = galleryNames.data;
         
         if (album.length === 0) {
@@ -80,9 +78,8 @@ const fetchCategory = async (category: string): Promise<Category> => {
 };
 
 const fetchCategories = async (): Promise<Category[] | null> => {
-    const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
     try {
-        const response = await axios.get(`${BACKEND_URL}/categories`);
+        const response = await axios.get(`${envVars.URL_BACKEND}/categories`);
         const categoryNames: string[] = response.data;
       
         if (!Array.isArray(categoryNames) || categoryNames.length === 0) {

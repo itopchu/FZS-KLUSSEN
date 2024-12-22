@@ -1,9 +1,6 @@
 import React from "react";
 import { Typography, Stack, useMediaQuery, useTheme } from "@mui/material";
-
-const siteRights: string = import.meta.env.VITE_SITE_RIGHTS as string;
-const sitePhone: string = import.meta.env.VITE_SITE_PHONE as string;
-const siteEmail: string = import.meta.env.VITE_SITE_EMAIL as string;
+import { envVars } from "../../App";
 
 interface ContactInfoProps {
   value: string;
@@ -33,15 +30,15 @@ const Footer = () => {
           direction={isSmallScreen ? "column" : "row"}
           style={{ display: "flex", justifyContent: "center", gap: "20px" }}
         >
-          <ContactInfo value={sitePhone} />
-          <ContactInfo value={siteEmail} />
+          <ContactInfo value={envVars.SITE_PHONE} />
+          <ContactInfo value={envVars.SITE_EMAIL} />
         </Stack>
         <Typography
           variant="body2"
           component="p"
           style={{ marginBottom: "10px" }}
         >
-          {siteRights}
+          {envVars.SITE_RIGHTS}
         </Typography>
       </footer>
     </div>

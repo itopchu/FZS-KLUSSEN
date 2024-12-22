@@ -13,8 +13,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { Stack, useTheme } from "@mui/system";
 import { useWindowContext } from "../../Providers/Windows";
-
-const BACKEND_URL: string = import.meta.env.VITE_URL_BACKEND as string;
+import { envVars } from "../../App";
 
 // Define interface for contact form properties
 interface ContactFormData {
@@ -109,7 +108,7 @@ const Contact: React.FC = () => {
     });
 
     try {
-      await axios.post(`${BACKEND_URL}/contact/info`, data, {
+      await axios.post(`${envVars.URL_BACKEND}/contact/info`, data, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
