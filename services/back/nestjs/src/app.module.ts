@@ -5,6 +5,8 @@ import { ContactModule } from './contact/contact.module';
 import { ConfigModule } from '@nestjs/config';
 import { ServicesModule } from './services/services.module';
 import { AlbumModule } from './album/album.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { AlbumModule } from './album/album.module';
     ContactModule,
     ServicesModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 
 export class AppModule {}

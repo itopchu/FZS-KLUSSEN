@@ -59,6 +59,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
   },
   "& .MuiInputBase-input": {
     color: theme.palette.text.primary,
+    padding: "1em",
   },
   "& .MuiFormHelperText-root": {
     color: theme.palette.text.primary,
@@ -67,7 +68,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
 
 const SquareDescriptionTextField = styled(CustomTextField)(() => ({
   '& .MuiOutlinedInput-root': {
-    borderRadius: '1em', // Square shape for the input
+    borderRadius: '1em',
   },
 }));
 
@@ -147,11 +148,10 @@ const Contact: React.FC = () => {
       justifyItems={"center"}
       justifySelf={"center"}
       bgcolor={theme.palette.background.default}
-      width={screenSize === 'mobile' ? "95%" : screenSize === 'wide' ? "60%" : "40%"}
+      width="100%"
     >
       <Stack
         spacing={5}
-        width={"100%"}
         alignItems="center"
         justifyContent="center"
         alignSelf={"center"}
@@ -159,6 +159,7 @@ const Contact: React.FC = () => {
         textAlign={"center"}
         justifyItems={"center"}
         justifySelf={"center"}
+        width={screenSize === 'mobile' ? "95%" : screenSize === 'wide' ? "60%" : "40%"}
       >
         <Typography color={theme.palette.primary.main} variant="h4" component="h1" gutterBottom textAlign="center">
           Contact Us

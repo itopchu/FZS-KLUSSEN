@@ -4,6 +4,7 @@
 # Ignore all files in contacts and content directories
 contacts/*
 content/*
+OneDrive_7_12-14-2024
 
 # Node.js dependencies
 services/back/nestjs/node_modules/

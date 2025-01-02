@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Typography, Stack, useTheme } from "@mui/material";
 import ServiceCards from "../Service/ServiceCards";
 import { Img } from 'react-image';
@@ -10,7 +10,11 @@ const AboutUs: React.FC = () => {
   const theme = useTheme();
   const { screenSize } = useWindowContext();
 
-  const aboutInfo: sectionDTO | null = fetchInfo("about");
+  const [aboutInfo, setAboutInfo] = useState<sectionDTO | null>(null);
+
+  useEffect(() => {
+    fetchInfo("about").then(data => setAboutInfo(data));
+  }, []);
 
   if (!aboutInfo) return null;
 

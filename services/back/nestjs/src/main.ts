@@ -4,16 +4,17 @@ import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import * as express from 'express';
-import rateLimit from 'express-rate-limit';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
+
   const port = configService.get<number>('PORT_BACKEND', 3001);
-  const cors = configService.get<string>('URL_FRONTEND') || 'http://localhost:3000';
+  const domain = configService.get<string>('DOMAIN_NAME', 'localhost');
+  const origin = [`https://www.${domain}`, `https://${domain}`, `http://localhost:${port}`];
 
   app.enableCors({
-    origin: ['https://www.fzsallround.nl', 'https://fzsallround.nl', configService.get('URL_FRONTEND') || 'http://localhost:3000'],
+    origin: origin,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: [
@@ -24,20 +25,9 @@ async function bootstrap() {
       'Origin'
     ],
   });
-
+  
   app.use(cookieParser());
-
-  app.useGlobalPipes(new ValidationPipe({
-      transform: true,
-  }));
-
-  // const limiter = rateLimit({
-  //   windowMs: 60 * 60 * 1000,
-  //   max: 3,
-  //   message: 'Too many requests from this IP, please try again later.',
-  // });
-  // app.use(limiter);
-
+  app.useGlobalPipes(new ValidationPipe({transform: true,}));
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 

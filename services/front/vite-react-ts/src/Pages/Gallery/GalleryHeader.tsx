@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { 
   Stack, 
   Typography, 
@@ -19,9 +19,17 @@ export function getResponsiveValue(screenSize: string, values: Record<string, st
 export const GalleryHeader: React.FC = () => {
   const theme = useTheme();
   const { screenSize } = useWindowContext();
-  const header: sectionDTO | null = fetchInfo("gallery");
+  const [header, setHeader] = useState<sectionDTO | null>(null);
 
-   if (!header) return null;
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchInfo("gallery");
+      setHeader(data);
+    };
+    fetchData();
+  }, []);
+
+  if (!header) return null;
 
   const getVariant = () => {
     switch(screenSize) {

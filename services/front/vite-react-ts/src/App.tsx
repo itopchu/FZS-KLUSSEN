@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./Sections/Header";
 import Footer from "./Sections/Footer";
@@ -24,24 +24,14 @@ export interface sectionDTO {
   description: string[];
 }
 
-export const fetchInfo = (type: string) => {
-  const [info, setInfo] = useState<sectionDTO | null>(null);
-
-  useEffect(() => {
-    async function fetchInfo() {
-      try {
-        const response = await axios.get(`${envVars.URL_BACKEND}/services/${type}`);
-        const infoDTO: sectionDTO = response.data;
-        setInfo(infoDTO);
-        console.log(infoDTO);
-      } catch (error) {
-        console.error("Error fetching about us info:", error);
-      }
-    }
-    fetchInfo();
-  }), [];
-
-  return info;
+export const fetchInfo = async (type: string): Promise<sectionDTO | null> => {
+  try {
+    const response = await axios.get(`${envVars.URL_BACKEND}/services/${type}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching about us info:", error);
+    return null;
+  }
 };
 
 
