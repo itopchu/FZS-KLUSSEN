@@ -77,7 +77,7 @@ function Header() {
           boxShadow: `0 0.2em 0.1 ${theme.palette.text.secondary}`,
           zIndex: theme.zIndex.drawer + 1,
           maxWidth: '100%',
-          overflowX: 'hidden',
+          overflow: 'hidden',
         }}
       >
         <Toolbar sx={{ height: '95%' }}>
