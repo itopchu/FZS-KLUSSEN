@@ -61,6 +61,8 @@ services:
       - backend
     expose:
       - "${PORT_FRONTEND}"
+    ports:
+      - "${PORT_FRONTEND}:${PORT_FRONTEND}"
     environment:
       VITE_PORT_BACKEND: ${PORT_BACKEND}
       VITE_PORT_FRONTEND: ${PORT_FRONTEND}
@@ -76,20 +78,6 @@ services:
       VITE_SITE_LOGO: ${SITE_LOGO}
       VITE_SITE_BANNER: ${SITE_BANNER}
 
-  nginx-proxy:
-    container_name: nginx-proxy
-    image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    networks:
-      - proxy
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - ./services/nginx/data:/data
-      - ./services/nginx/letsencrypt:/etc/letsencrypt
-
 volumes:
   db-data:
 
@@ -97,4 +85,4 @@ networks:
   internal:
     driver: bridge
   proxy:
-    driver: bridge
+    external: true
