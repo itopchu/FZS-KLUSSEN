@@ -140,7 +140,7 @@ const theme = createTheme({
           to { opacity: 1; }
         }
         
-        * {
+        button, a, .transition-element {
           transition: all 0.3s ease;
         }
       `,

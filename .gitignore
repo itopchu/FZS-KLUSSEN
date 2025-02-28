@@ -9,7 +9,6 @@ OneDrive_7_12-14-2024
 # Node.js dependencies
 services/back/nestjs/node_modules/
 services/front/vite-react-ts/node_modules/
-services/nginx/*
 
 # Logs
 logs
